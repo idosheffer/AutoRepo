@@ -7,7 +7,7 @@ trigger:
 - main
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'e97b20a4-d79e-42ef-afe4-9f7d5abfe1fd'
+  azureSubscription: '$(azureSubscription)'
 pool:
   vmImage: ubuntu-latest
 stages:
@@ -42,7 +42,6 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    environment: $(environmentName)
     pool:
       vmImage: $(vmImageName)
     strategy:
@@ -54,7 +53,7 @@ stages:
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
-              appName: $(webAppName)
+              appName: node-tracker
               runtimeStack: 'NODE|10.10'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               startUpCommand: 'npm run start'
