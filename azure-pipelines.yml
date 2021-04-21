@@ -42,6 +42,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
+    environment: Deploy
     pool:
       vmImage: $(vmImageName)
     strategy:
@@ -53,7 +54,7 @@ stages:
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
-              appName: node-tracker
+              appName: $(webAppName)
               runtimeStack: 'NODE|10.10'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               startUpCommand: 'npm run start'
