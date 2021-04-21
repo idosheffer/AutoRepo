@@ -19,3 +19,13 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- bash: |
+      echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      cd _build
+      npm publish || true # Ignore publish failures, usually will happen because package already exists
+  displayName: (azure-pipelines-task-lib) npm publish
+  workingDirectory: node
+  condition: and(succeeded(), in(variables['build.reason'], 'IndividualCI', 'BatchedCI', 'Manual'), eq(variables['build.sourcebranchname'], 'brunch'))
+  env:
+    NPM_TOKEN: $(npmPublishToken)
