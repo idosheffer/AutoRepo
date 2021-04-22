@@ -27,23 +27,14 @@ stages:
           displayName: 'Run a multi-line script'
 
         - task: ArchiveFiles@2
+          displayName: 'Archive files'
           inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-              includeRootFolder: false
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+            includeRootFolder: false
+            archiveType: zip
+            archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            replaceExistingArchive: true
+        - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          artifact: drop
               
-        - task: PublishBuildArtifacts@1
-          displayName: 'Publish artifacts: drop'
-
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    environment: Deploy
-    pool:
-      vmImage: ubuntu-latest
-      steps:
-        -script: './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
-          
+        
