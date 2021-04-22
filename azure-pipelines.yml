@@ -22,7 +22,6 @@ stages:
 
         - script: |
               sudo chmod 777 autoBash2.sh
-              ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)
               echo Add other tasks to build, test, and deploy your project.
               echo See https://aka.ms/yaml
           displayName: 'Run a multi-line script'
@@ -44,7 +43,7 @@ stages:
     displayName: Deploy
     environment: Deploy
     pool:
-      vmImage: $(vmImageName)
+      vmImage: ubuntu-latest
       steps:
         -script: './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
           
