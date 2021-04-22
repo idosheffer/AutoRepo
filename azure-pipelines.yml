@@ -18,19 +18,19 @@ stages:
       displayName: Build
       steps:
         - script: git clone https://github.com/idosheffer/AutoRepo.git
-          displayName: 'Run a one-line script'
+          displayName: 'AutoScript Clone'
 
         - script: |
               sudo chmod 777 autoBash2.sh
               echo Add other tasks to build, test, and deploy your project.
               echo See https://aka.ms/yaml
-          displayName: 'Run a multi-line script'
+          displayName: 'AutoScript chmod'
 
         - task: ArchiveFiles@2
           displayName: 'Archive files'
           inputs:
             rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-            includeRootFolder: false
+            includeRootFolder: true
             archiveType: zip
             archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             replaceExistingArchive: true
@@ -50,7 +50,7 @@ stages:
         deploy:
          steps:
          - script: |
-             ./AutoScript.sh -u dev-99599211.okta.com -i 0oac5clupZ1q3z6k35d6 -s iSOIcV8yjuQTDHEX5NLY2DUWSgo0tMA9_v5peJqI -h postgresql-ido.postgres.database.azure.com -p Password1234 -n postgresido@postgresql-ido
+             ./AutoScript.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)
 
        
               
