@@ -50,8 +50,17 @@ stages:
        runOnce:
         deploy:
          steps:
-         - script: |
-             ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)
+         
+         - task: CmdLine@2
+           inputs:
+            script: |
+             'cd drop'
+             'unzip $(Build.BuildId).zip' 
+             './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
+             
+    
+         
+             
 
        
               
