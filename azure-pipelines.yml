@@ -36,8 +36,9 @@ stages:
             replaceExistingArchive: true
         - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
           artifact: drop        
-          
-    - job:  
+- stage: Deploy
+  displayName: Deploy
+  jobs:           
     - deployment: VMDeploy
       displayName: web
       pool:
