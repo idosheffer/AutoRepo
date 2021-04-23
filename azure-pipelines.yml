@@ -54,7 +54,7 @@ stages:
          steps:   
          - task: ExtractFiles@1
            inputs:
-              archiveFilePatterns: '**/$(Build.BuildId).zip' 
+              archiveFilePatterns: '/home/Ubuntu/azagent/_work/1/drop/$(Build.BuildId).zip' 
               destinationFolder:  '/home/Ubuntu/azagent/_work/1/drop'     
          - task: Bash@3
            inputs:
