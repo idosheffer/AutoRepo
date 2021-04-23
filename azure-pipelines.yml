@@ -51,17 +51,14 @@ stages:
       strategy:
        runOnce:
         deploy:
-         steps:
-         
-         - task: CmdLine@2
-         pool:
-           vmImage: ubuntu-latest
+         steps:        
+         - task: Bash@3
            inputs:
             script: |
              'cd drop'
              'unzip $(Build.BuildId).zip' 
              './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
-            workingDirectory: $(Agent.BuildDirectory) 
+             
             
     
          
