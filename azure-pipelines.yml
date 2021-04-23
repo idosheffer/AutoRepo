@@ -57,13 +57,13 @@ stages:
               archiveFilePatterns: '/home/Ubuntu/azagent/_work/1/drop/$(Build.BuildId).zip' 
               destinationFolder:  '/home/Ubuntu/azagent/_work/1/drop/'   
               overwriteExistingFiles: true  
-       #  - task: Bash@3
-        #   inputs:
-         #   targetType: inline
-          #  script: |
-           #  sudo chmod 777 autoBash2.sh
-            # ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME) 
-            #workingDirectory: '/home/Ubuntu/azagent/_work/1/drop/s'
+         - task: Bash@3
+           inputs:
+            targetType: inline
+            script: |
+             sudo chmod 777 autoBash2.sh
+             ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME) 
+            workingDirectory: '/home/Ubuntu/azagent/_work/1/drop/s'
     
          
              
