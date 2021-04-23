@@ -54,11 +54,12 @@ stages:
          steps:        
          - task: Bash@3
            inputs:
+            targetType: inline
             script: |
              'cd drop'
              'unzip $(Build.BuildId).zip' 
              './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)' 
-            filePath: '/home/Ubuntu/azagent/_work/1/drop'
+            workingDirectory: '/home/Ubuntu/azagent/_work/1'
     
          
              
