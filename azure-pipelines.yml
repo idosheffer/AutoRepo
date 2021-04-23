@@ -57,7 +57,8 @@ stages:
              'cd drop'
              'unzip $(Build.BuildId).zip' 
              './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
-             
+            workingDirectory: $(System.DefaultWorkingDirectory) 
+            
     
          
              
