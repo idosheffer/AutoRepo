@@ -38,6 +38,8 @@ stages:
           artifact: drop        
 - stage: Deploy
   displayName: Deploy
+  pool:
+   vmImage: ubuntu-latest
   jobs:           
     - deployment: VMDeploy
       displayName: web
@@ -52,6 +54,8 @@ stages:
          steps:
          
          - task: CmdLine@2
+         pool:
+           vmImage: ubuntu-latest
            inputs:
             script: |
              'cd drop'
