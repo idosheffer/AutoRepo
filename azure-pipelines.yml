@@ -54,7 +54,7 @@ stages:
          - task: ExtractFiles@1
            inputs:
               cleanDestinationFolder: false 
-              archiveFilePatterns: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip' 
+              archiveFilePatterns: '/home/Ubuntu/azagent/_work/1/drop/$(Build.BuildId).zip' 
               destinationFolder:  '$(System.DefaultWorkingDirectory)/s'   
               overwriteExistingFiles: true  
         # - task: Bash@3
