@@ -11,20 +11,17 @@ variables:
 pool:
   vmImage: ubuntu-latest
 stages:
+ # Start the build stage (CI)
 - stage:  Build
   displayName: Build stage
   jobs:
     - job: Build
       displayName: Build
       steps:
-        - script: git clone https://github.com/idosheffer/AutoRepo.git
+  # Git clone autoBash2.sh script
+        - script: git clone https://github.com/idosheffer/AutoRepo.git 
           displayName: 'AutoScript Clone'
-
-        - script: |
-              echo Add other tasks to build, test, and deploy your project.
-              echo See https://aka.ms/yaml
-          displayName: 'AutoScript chmod'
-
+  # Archive the git clone files as artifact in the name "drop"
         - task: ArchiveFiles@2
           displayName: 'Archive files'
           inputs:
@@ -34,7 +31,8 @@ stages:
             archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             replaceExistingArchive: true
         - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-          artifact: drop        
+          artifact: drop 
+  # Start the deploy stage (CD)               
 - stage: Deploy
   displayName: Deploy
   pool:
@@ -50,13 +48,15 @@ stages:
       strategy:
        runOnce:
         deploy:
-         steps:   
+         steps:  
+     # Extract the artifact to "/azagent\1\s\s\s" 
          - task: ExtractFiles@1
            inputs:
               cleanDestinationFolder: false 
               archiveFilePatterns: '/home/Ubuntu/azagent/_work/1/drop/$(Build.BuildId).zip' 
               destinationFolder:  '$(System.DefaultWorkingDirectory)/s'   
               overwriteExistingFiles: true  
+     # Run the autoBash2.sh file and give him his parameters for deploy node-tracker app 
          - task: Bash@3
            inputs:
             targetType: inline
