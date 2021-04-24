@@ -63,7 +63,7 @@ stages:
             script: |
              sudo chmod 777 autoBash2.sh
              ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME) 
-            workingDirectory: '$(System.DefaultWorkingDirectory)/s'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/s/s'
          
             
     
