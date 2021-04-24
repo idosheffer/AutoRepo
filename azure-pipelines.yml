@@ -69,7 +69,7 @@ stages:
                 azureSubscription: 'Azure Pass - Sponsorship (c671a80f-4913-43d3-9c4f-8b802dce0f93)'
                 appType: 'webAppLinux'
                 appName: 'node-tracker'
-                package: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'
+                package: '/home/Ubuntu/azagent/_work/1/drop/$(Build.BuildId).zip'
                 runtimeStack: 'NODE|12.9'
                 startUpCommand: './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
             
