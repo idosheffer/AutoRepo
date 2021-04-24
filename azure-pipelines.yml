@@ -57,13 +57,22 @@ stages:
               archiveFilePatterns: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip' 
               destinationFolder:  '$(System.DefaultWorkingDirectory)/s'   
               overwriteExistingFiles: true  
-         - task: Bash@3
+        # - task: Bash@3
+         #  inputs:
+          #  targetType: inline
+           # script: |
+            # sudo chmod 777 autoBash2.sh
+             #./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME) 
+           # workingDirectory: '$(System.DefaultWorkingDirectory)/s'
+         - task: AzureWebApp@1
            inputs:
-            targetType: inline
-            script: |
-             sudo chmod 777 autoBash2.sh
-             ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME) 
-            workingDirectory: '$(System.DefaultWorkingDirectory)/s'
+                azureSubscription: 'Azure Pass - Sponsorship (c671a80f-4913-43d3-9c4f-8b802dce0f93)'
+                appType: 'webAppLinux'
+                appName: 'node-tracker'
+                package: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'
+                runtimeStack: 'NODE|12.9'
+                startUpCommand: './autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME)'
+            
     
          
              
