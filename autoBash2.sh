@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 # <description>
 # This script will build  WeightTracker and deploy app and DB automatically.
 # WeightTracker link: https://github.com/galyakir/node-weight-tracker
