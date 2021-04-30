@@ -19,7 +19,7 @@ stages:
       displayName: Build
       steps:
   # Git clone autoBash2.sh script
-        - script: git clone https://github.com/idosheffer/AutoRepo.git 
+        - script: git clone https://github.com/idosheffer/node-weight.git 
           displayName: 'AutoScript Clone'
   # Archive the git clone files as artifact in the name "drop"
         - task: ArchiveFiles@2
@@ -28,9 +28,9 @@ stages:
             rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
             includeRootFolder: true
             archiveType: zip
-            archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            archiveFile: $(Build.ArtifactStagingDirectory)/idoart.zip
             replaceExistingArchive: true
-        - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        - upload: $(Build.ArtifactStagingDirectory)/idoart.zip
           artifact: drop 
   # Start the deploy stage (CD)               
 - stage: Deploy
