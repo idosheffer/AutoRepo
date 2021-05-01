@@ -79,6 +79,40 @@ stages:
              inventoriesAgentMachine: 'noInventory'
              args: '--extra-vars "OKTAURL=$(OKTAURL) OKTAID=$(OKTAID) OKTASECRET=$(OKTASECRET) POSTGRESHOST=$(POSTGRESHOST) POSTGRESPASSWORD=$(POSTGRESPASSWORD) POSTGRESUSERNAME=$(POSTGRESUSERNAME)"'
              failOnStdErr: false
+
+
+
+- stage: Production
+  displayName: Production
+  pool:
+    vmImage: ubuntu-latest
+  jobs:           
+    - deployment: VMDeploy
+      displayName: web
+      pool:
+       vmImage: 'Ubuntu-16.04'
+      environment:
+       name:  Deploy
+       resourceType: VirtualMachine
+      strategy:
+       runOnce:
+        deploy:
+         steps:  
+         - task: ManualValidation@0
+           timeoutInMinutes: 1440 # task times out in 1 day
+           inputs:
+            notifyUsers: |
+             Idosheffer99@gmail.com
+            instructions: 'Please validate the build configuration and resume'
+            onTimeout: 'resume' 
+
+         - task: Ansible@0
+           inputs:
+             ansibleInterface: 'agentMachine'
+             playbookPathOnAgentMachine: '/etc/ansible/myfirstplaybook.yml'
+             inventoriesAgentMachine: 'noInventory'
+             args: '--extra-vars "OKTAURL=$(OKTAURL) OKTAID=$(OKTAID) OKTASECRET=$(OKTASECRET) POSTGRESHOST=$(POSTGRESHOST) POSTGRESPASSWORD=$(POSTGRESPASSWORD) POSTGRESUSERNAME=$(POSTGRESUSERNAME)"'
+             failOnStdErr: false   
              
          
 
