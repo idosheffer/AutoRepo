@@ -57,7 +57,11 @@ stages:
              args: '--extra-vars "OKTAURL=$(OKTAURL) OKTAID=$(OKTAID) OKTASECRET=$(OKTASECRET) POSTGRESHOST=$(POSTGRESHOST) POSTGRESPASSWORD=$(POSTGRESPASSWORD) POSTGRESUSERNAME=$(POSTGRESUSERNAME)"'
              failOnStdErr: false
 
-
+         - task: ManualValidation@0
+           inputs:
+            notifyUsers: 'IdoProj5'
+            instructions: 'approve'
+            onTimeout: 'resume'
 
 - stage: Production
   displayName: Production
@@ -74,12 +78,7 @@ stages:
       strategy:
        runOnce:
         deploy:
-         steps:
-         - task: ManualIntervention@8
-           inputs:
-             instructions: 'please approve'
-             emailRecipients: 'IdoProj5'
-             onTimeout: 'resume'           
+         steps:  
          - task: Ansible@0
            inputs:
              ansibleInterface: 'agentMachine'
@@ -87,7 +86,6 @@ stages:
              inventoriesAgentMachine: 'noInventory'
              args: '--extra-vars "OKTAURL=$(OKTAURL) OKTAID=$(OKTAID) OKTASECRET=$(OKTASECRET) POSTGRESHOST=$(POSTGRESHOST) POSTGRESPASSWORD=$(POSTGRESPASSWORD) POSTGRESUSERNAME=$(POSTGRESUSERNAME)"'
              failOnStdErr: false   
-             
              
          
 
