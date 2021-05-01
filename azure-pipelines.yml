@@ -87,8 +87,8 @@ stages:
   pool:
     vmImage: ubuntu-latest
   jobs:           
-    - deployment: VMDeploy
-      displayName: web
+    - deployment: ProductionVMDeploy
+      displayName: prodweb
       pool:
        vmImage: 'Ubuntu-16.04'
       environment:
