@@ -49,29 +49,6 @@ stages:
        runOnce:
         deploy:
          steps:  
-         - task: ManualValidation@0
-           timeoutInMinutes: 1440 # task times out in 1 day
-           inputs:
-            notifyUsers: |
-             Idosheffer99@gmail.com
-            instructions: 'Please validate the build configuration and resume'
-            onTimeout: 'resume' 
-     # Extract the artifact to "/azagent\1\s\s\s" 
-     #    - task: ExtractFiles@1
-      #     inputs:
-       #       cleanDestinationFolder: false 
-        #      archiveFilePatterns: '/home/Ubuntu/azagent/_work/1/drop/$(Build.BuildId).zip' 
-         #     destinationFolder:  '$(System.DefaultWorkingDirectory)/s'   
-          #    overwriteExistingFiles: true  
-     # Run the autoBash2.sh file and give him his parameters for deploy node-tracker app 
-        # - task: Bash@3
-        #   inputs:
-        #    targetType: inline
-        #    script: |
-        #     sudo chmod 777 autoBash2.sh
-        #     ./autoBash2.sh -u $(OKTAURL) -i $(OKTAID) -s $(OKTASECRET) -h $(POSTGRESHOST) -p $(POSTGRESPASSWORD) -n $(POSTGRESUSERNAME) 
-        #    workingDirectory: '$(System.DefaultWorkingDirectory)/s/s'
-         
          - task: Ansible@0
            inputs:
              ansibleInterface: 'agentMachine'
