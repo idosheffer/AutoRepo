@@ -74,7 +74,12 @@ stages:
       strategy:
        runOnce:
         deploy:
-         steps:  
+         steps:
+         - task: ManualIntervention@8
+           inputs:
+             instructions: 'please approve'
+             emailRecipients: 'IdoProj5'
+             onTimeout: 'resume'           
          - task: Ansible@0
            inputs:
              ansibleInterface: 'agentMachine'
@@ -82,6 +87,7 @@ stages:
              inventoriesAgentMachine: 'noInventory'
              args: '--extra-vars "OKTAURL=$(OKTAURL) OKTAID=$(OKTAID) OKTASECRET=$(OKTASECRET) POSTGRESHOST=$(POSTGRESHOST) POSTGRESPASSWORD=$(POSTGRESPASSWORD) POSTGRESUSERNAME=$(POSTGRESUSERNAME)"'
              failOnStdErr: false   
+             
              
          
 
