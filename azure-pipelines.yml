@@ -58,12 +58,6 @@ stages:
              args: '--extra-vars "OKTAURL=$(OKTAURL) OKTAID=$(OKTAID) OKTASECRET=$(OKTASECRET) POSTGRESHOST=$(POSTGRESHOST) POSTGRESPASSWORD=$(POSTGRESPASSWORD) POSTGRESUSERNAME=$(POSTGRESUSERNAME)"'
              failOnStdErr: false
 
-         - task: ManualValidation@0
-           inputs:
-            notifyUsers: 'IdoProj5'
-            instructions: 'approve'
-            onTimeout: 'resume'
-
 - stage: Production
   displayName: Production
   pool:
