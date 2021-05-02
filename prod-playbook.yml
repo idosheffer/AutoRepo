@@ -1,5 +1,5 @@
 ---
-- hosts: production
+- hosts: prod
   become: yes
   tasks:
 
@@ -39,7 +39,7 @@
       name: nodejs
       state: present
 
- - name: install dotnev
+  - name: install dotnev
     ansible.builtin.shell: npm install dotenv
 
   - name: install nodemon
