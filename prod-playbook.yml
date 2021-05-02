@@ -1,0 +1,101 @@
+---
+- hosts: production
+  become: yes
+  tasks:
+
+  - name: install git
+    apt:
+      name: git
+      state: present
+
+  - name: Download artifact
+    get_url:
+      url: https://artprodsu6weu.artifacts.visualstudio.com/Acf7bd7bb-997a-42c8-b49e-4eb1bfb36bab/c86e7b6f-c0fd-4139-84fe-768807698e01/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2lkb3NoZWZmZXI5OS9wcm9qZWN0SWQvYzg2ZTdiNmYtYzBmZC00MTM5LTg0ZmUtNzY4ODA3Njk4ZTAxL2J1aWxkSWQvMTI4L2FydGlmYWN0TmFtZS9kcm9w0/content?format=zip
+      dest: /home/Ubuntu
+      force_basic_auth: no
+
+  - name: install zip
+    apt:
+      name: zip
+      state: present
+
+  - name: Extract artifact
+    ansible.builtin.unarchive:
+      src: /home/Ubuntu/drop.zip
+      dest: /home/Ubuntu
+      remote_src: yes
+
+  - name: Extract drop
+    ansible.builtin.unarchive:
+      src: /home/Ubuntu/drop/idoart.zip
+      dest: /home/Ubuntu
+      remote_src: yes
+
+  - name: update nodejs package
+    ansible.builtin.shell: curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+
+  - name: install nodejs
+    apt:
+      name: nodejs
+      state: present
+
+ - name: install dotnev
+    ansible.builtin.shell: npm install dotenv
+
+  - name: install nodemon
+    ansible.builtin.shell: npm install nodemon
+
+  - name: install pm2
+    ansible.builtin.shell: npm install pm2 -g
+
+  - name: install cjs
+    ansible.builtin.shell: npm install cjs
+
+  - name: Find my public ip
+    uri:
+      url: http://ifconfig.me/ip
+      return_content: yes
+    register: ip_response
+
+  - name: Creating a .env file
+    copy:
+      dest: "/home/Ubuntu/s/node-weight/.env"
+      content: |
+        PORT=8080
+        HOST=0.0.0.0
+        NODE_ENV=development
+        HOST_URL=http://{{ ip_response.content }}:8080
+        COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+        OKTA_ORG_URL=https:{{OKTAURL}}
+        OKTA_CLIENT_ID={{OKTAID}}
+        OKTA_CLIENT_SECRET={{OKTASECRET}}
+        PGHOST={{POSTGRESHOST}}
+        PGUSERNAME={{POSTGRESUSERNAME}}
+        PGDATABASE=postgres
+        PGPASSWORD={{POSTGRESPASSWORD}}
+        PGPORT=5432
+
+  - name: npm install
+    ansible.builtin.shell: npm install
+    args:
+      chdir: s/node-weight
+
+  - name: initialize db
+    ansible.builtin.shell: npm run initdb
+    args:
+      chdir: s/node-weight
+
+  - name: run app
+    ansible.builtin.shell: pm2 start npm -- run dev
+    args:
+      chdir: s/node-weight
+
+  - name: pm2 save
+    ansible.builtin.shell: pm2 save
+    args:
+      chdir: s/node-weight
+
+  - name: pm2 startup
+    ansible.builtin.shell: pm2 startup
+    args:
+      chdir: s/node-weight
